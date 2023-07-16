@@ -1,0 +1,209 @@
+﻿<Window x:Class="Individual.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Individual"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="650"
+        Width="800"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent" Loaded="Window_Loaded_1">
+
+    <Window.Resources>
+        <!--// Close App Button Style //-->
+
+        <ImageBrush x:Key="close_def"
+                    ImageSource="Assets/img_shutdown_def.png"
+                    Stretch="None" />
+
+        <ImageBrush x:Key="close_mo"
+                    ImageSource="Assets/img_shutdown_mo.png"
+                    Stretch="None" />
+
+        <Style x:Key="CloseAppStyle"
+               TargetType="{x:Type Button}">
+
+            <Setter Property="Height"
+                    Value="25" />
+            <Setter Property="Width"
+                    Value="25" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Right" />
+            <Setter Property="VerticalAlignment"
+                    Value="Top" />
+            <Setter Property="Margin"
+                    Value="0,40,40,0" />
+
+            <Setter Property="Template">
+
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="{x:Type Button}">
+
+                        <Border x:Name="border"
+                                BorderThickness="0"
+                                Background="{StaticResource close_def}" />
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+
+                                <Setter Property="Background"
+                                        TargetName="border"
+                                        Value="{StaticResource close_mo}" />
+
+                            </Trigger>
+
+                            <Trigger Property="IsPressed"
+                                     Value="True">
+
+                                <Setter Property="Background"
+                                        TargetName="border"
+                                        Value="{StaticResource close_mo}" />
+
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!--Data Grid Style-->
+        <Style x:Key="dataGrid" TargetType="DataGrid">
+            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource ChlH}"></Setter>
+            <Setter Property="BorderBrush" Value="#524E4F"></Setter>
+            <Setter Property="RowBackground" Value="#524E4F"></Setter>
+            <Setter Property="Foreground"   Value="White"></Setter>
+        </Style>
+
+        <Style  x:Key="ChlH" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#363435"/>
+            <Setter Property="Foreground" Value="#EBB90D"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize"   Value="15"/>
+            <Setter Property="Padding"    Value="8"/>
+        </Style>
+
+    </Window.Resources>
+    <Window.DataContext>
+        <Binding RelativeSource="{RelativeSource Self}"/>
+    </Window.DataContext>
+    <Grid>
+        <!--Background-->
+        <Border Height=" 600"
+                Width="750"
+                CornerRadius="25"
+                Background="#524E4F">
+            <Border.Effect>
+                <DropShadowEffect Color="Black"
+                                  Opacity="0.5"
+                                  Direction="90"
+                                  ShadowDepth="2"
+                                  BlurRadius="35"/>
+            </Border.Effect>
+            <StackPanel Margin="40">
+                <DataGrid 
+                    x:Name="StudentGrid" 
+                    Margin="0 50 0 50" 
+                    AutoGenerateColumns="False" 
+                    ItemsSource="{Binding STUDENTS}"
+                    Height="300"
+                    Background="#524E4F"
+                    Style="{DynamicResource dataGrid}"
+                    >
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="*"  Header="ID" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Width="2*" Header="First Name" Binding="{Binding SFirstName}"/>
+                        <DataGridTextColumn Width="2*" Header="Last Name" Binding="{Binding  SSecondName}"/>
+                        <DataGridTextColumn Width="2*" Header="GPA" Binding="{Binding SGPA}"/>
+                        <DataGridTextColumn Width="*" Header="DoB" Binding="{Binding SDateOfBirth}"/>
+                    </DataGrid.Columns>
+
+                </DataGrid>
+
+
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button
+                        Content="Add Student"
+                        x:Name="add"
+                        Width="150"
+                        Height="40"
+                        Margin="0 40 0 0"
+                        FontWeight="Bold"
+                        FontSize="15"
+                        FontFamily="Montserrat"
+                        Click="open_add_Click"
+                        Grid.Column="0"
+                        Style="{StaticResource FuncButton}">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="20"></Setter>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+
+                    <Button
+                        Content="Edit Details"
+                        x:Name="edit"
+                        Width="150"
+                        Height="40"
+                        Margin="0 40 0 0"
+                        FontWeight="Bold"
+                        FontSize="15"
+                        FontFamily="Montserrat"
+                        Click="open_edit_Click"
+                        Grid.Column="1"
+                        Style="{StaticResource FuncButton}">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="20"></Setter>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+
+                    <Button
+                        Content="Delete"
+                        x:Name="delete"
+                        Width="150"
+                        Height="40"
+                        Margin="0 40 0 0"
+                        FontWeight="Bold"
+                        FontSize="15"
+                        FontFamily="Montserrat"
+                        Click="open_delete_Click"
+                        Grid.Column="2"
+                        Style="{StaticResource FuncButton}">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="20"></Setter>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+
+
+                </Grid>
+
+            </StackPanel>
+
+        </Border>
+        
+        <!--Close button-->
+        <Button  x:Name="Close_App"
+                Style= "{StaticResource CloseAppStyle}"
+                Click="Close_App_Click" />
+
+    </Grid>
+</Window>
